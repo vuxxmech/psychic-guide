@@ -284,6 +284,11 @@
 
   /* ---------- Music Player UI ---------- */
   (function () {
+    var TRACK_KEY   = "abyss_track";
+    var VOL_KEY     = "abyss_vol";
+    var DEFAULT_VOL = 35;
+    var MAX_VOLUME  = 0.7;
+
     var wrap = document.createElement("div");
     wrap.id = "ambient-player";
     wrap.setAttribute("aria-label", "Ambient music player");
@@ -306,8 +311,7 @@
             '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>',
             '<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>',
           '</svg>',
-          '<input type="range" id="vol-slider" min="0" max="100" value="35" aria-label="Volume">',
-        '</div>',
+          '<input type="range" id="vol-slider" min="0" max="100" value="' + DEFAULT_VOL + '" aria-label="Volume">',        '</div>',
       '</div>',
       '<button id="music-btn" aria-label="Open ambient music player" aria-expanded="false" title="Ambient Atmosphere">',
         '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"',
@@ -326,6 +330,40 @@
     var volSlider = document.getElementById("vol-slider");
     var panelOpen = false;
     var activeTrack = null;
+
+    /* --- Restore saved state from previous page --- */
+    var savedTrack = sessionStorage.getItem(TRACK_KEY);
+    var savedVol   = parseInt(sessionStorage.getItem(VOL_KEY) || String(DEFAULT_VOL), 10);
+
+    if (savedTrack) {
+      activeTrack = savedTrack;
+      volSlider.value = savedVol;
+      var savedItem = document.querySelector('[data-track="' + savedTrack + '"]');
+      if (savedItem) savedItem.classList.add("active");
+      btn.classList.add("is-playing");
+
+      /* Show resume hint */
+      var resumeEl = document.createElement("div");
+      resumeEl.id = "music-resume";
+      resumeEl.textContent = "♪ Click anywhere to resume ambient audio";
+      document.body.appendChild(resumeEl);
+      setTimeout(function () { resumeEl.classList.add("visible"); }, 250);
+
+      /* Auto-resume on first user interaction */
+      var resumed = false;
+      function tryResume() {
+        if (resumed) return;
+        resumed = true;
+        document.removeEventListener("click", tryResume);
+        document.removeEventListener("scroll", tryResume);
+        Ambient.play(savedTrack);
+        Ambient.setVolume((savedVol / 100) * MAX_VOLUME);
+        resumeEl.classList.remove("visible");
+        setTimeout(function () { if (resumeEl.parentNode) resumeEl.parentNode.removeChild(resumeEl); }, 600);
+      }
+      document.addEventListener("click", tryResume);
+      document.addEventListener("scroll", tryResume, { passive: true });
+    }
 
     btn.addEventListener("click", function () {
       panelOpen = !panelOpen;
@@ -349,18 +387,22 @@
           activeTrack = null;
           item.classList.remove("active");
           btn.classList.remove("is-playing");
+          sessionStorage.removeItem(TRACK_KEY);
         } else {
           document.querySelectorAll(".track-item").forEach(function (t) { t.classList.remove("active"); });
           item.classList.add("active");
           Ambient.play(track);
           activeTrack = track;
           btn.classList.add("is-playing");
+          sessionStorage.setItem(TRACK_KEY, track);
+          sessionStorage.setItem(VOL_KEY, volSlider.value);
         }
       });
     });
 
     volSlider.addEventListener("input", function () {
-      Ambient.setVolume((volSlider.value / 100) * 0.7);
+      Ambient.setVolume((volSlider.value / 100) * MAX_VOLUME);
+      sessionStorage.setItem(VOL_KEY, volSlider.value);
     });
   })();
 
@@ -383,6 +425,10 @@
       { text: "Welsh has a word for the longing for a home you cannot return to, or perhaps never had: hiraeth. English does not.", attr: "On Language & Loss" },
       { text: "Physics tells us: to observe something precisely is to change it. You cannot look at anything without altering it.", attr: "On Uncertainty" },
       { text: "If you met a perfect copy of yourself — atom for atom, memory for memory — how would you decide which of you was real?", attr: "On Identity" },
+      { text: "Sisyphus descends. The boulder waits. The hill is the same hill it always was. We must imagine him happy.", attr: "On the Absurd" },
+      { text: "The silence of the cosmos is not neutral. Every proposed explanation for why we hear nothing implies something catastrophic.", attr: "On the Fermi Paradox" },
+      { text: "Before you were born, thirteen billion years passed without you. After you die, the same will happen. You are a parenthesis.", attr: "On Mortality" },
+      { text: "The electron has no definite position until you look. What it means for you to 'look' is a question physics cannot yet answer.", attr: "On Quantum Reality" },
     ];
 
     var idx = Math.floor(new Date().setHours(0, 0, 0, 0) / 86400000) % fragments.length;
