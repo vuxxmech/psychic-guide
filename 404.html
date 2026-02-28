@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — The Abyss Looks Back</title>
+  <meta name="description" content="Page not found." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .not-found {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      gap: 1.5rem;
+    }
+    .not-found-code {
+      font-family: var(--serif);
+      font-size: clamp(5rem, 15vw, 10rem);
+      color: var(--bg-card);
+      line-height: 1;
+      -webkit-text-stroke: 1px rgba(122,143,168,.3);
+      text-stroke: 1px rgba(122,143,168,.3);
+    }
+    .not-found-title {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--text-bright);
+      font-weight: 400;
+    }
+    .not-found-text {
+      max-width: 440px;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+    .not-found-link {
+      display: inline-block;
+      margin-top: .5rem;
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(122,143,168,.25);
+      padding: .6rem 1.5rem;
+      border-radius: 2rem;
+      transition: color .3s, border-color .3s;
+    }
+    .not-found-link:hover {
+      color: var(--text-bright);
+      border-color: rgba(122,143,168,.6);
+    }
+  </style>
+</head>
+<body>
+  <div id="cursor" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <nav aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo">The Abyss <span>Looks Back</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#essays">Essays</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <main class="not-found">
+    <div class="not-found-code" aria-hidden="true">404</div>
+    <h1 class="not-found-title">This page does not exist.</h1>
+    <p class="not-found-text">
+      Or it did exist, and you are remembering it incorrectly. Or it exists elsewhere,
+      and you have found the wrong one. The difference may not be as significant as it seems.
+    </p>
+    <a href="index.html" class="not-found-link">Return to the Abyss</a>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
