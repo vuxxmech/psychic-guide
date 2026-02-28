@@ -570,3 +570,325 @@ footer p {
 .text-bright  { color: var(--text-bright); }
 .font-serif   { font-family: var(--serif); }
 .italic       { font-style: italic; }
+
+/* --- Starfield Canvas ---------------------------------------- */
+#starfield {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 1;
+  opacity: .55;
+}
+
+/* --- Ambient Music Player ------------------------------------ */
+#ambient-player {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .75rem;
+}
+
+#music-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background: rgba(11,11,18,.88);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 13px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color var(--transition), color var(--transition), width .4s cubic-bezier(.4,0,.2,1), background var(--transition);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#music-btn:hover { border-color: rgba(122,143,168,.3); color: var(--text); }
+
+#music-btn.is-playing {
+  width: auto;
+  border-color: rgba(122,143,168,.35);
+  color: var(--accent);
+  background: rgba(11,11,18,.95);
+}
+
+#music-waves {
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+#music-btn.is-playing #music-waves { display: flex; }
+
+#music-waves i {
+  display: block;
+  width: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  animation: wave-bar 1.1s ease-in-out infinite;
+}
+
+#music-waves i:nth-child(1) { height: 5px;  animation-delay: 0s; }
+#music-waves i:nth-child(2) { height: 10px; animation-delay: .16s; }
+#music-waves i:nth-child(3) { height: 7px;  animation-delay: .32s; }
+#music-waves i:nth-child(4) { height: 4px;  animation-delay: .48s; }
+
+@keyframes wave-bar {
+  0%, 100% { transform: scaleY(.35); opacity: .7; }
+  50%       { transform: scaleY(1);  opacity: 1; }
+}
+
+#music-panel {
+  background: rgba(10,10,16,.94);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.3rem 1.25rem 1.1rem;
+  width: 218px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.55);
+  animation: fadeUp .22s ease;
+}
+
+#music-panel[hidden] { display: none; }
+
+.music-label {
+  font-size: .62rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.track-item {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: .6rem .7rem;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  text-align: left;
+  transition: background var(--transition), border-color var(--transition);
+  width: 100%;
+}
+
+.track-item:hover { background: rgba(255,255,255,.04); border-color: var(--border); }
+
+.track-item.active {
+  background: rgba(122,143,168,.09);
+  border-color: rgba(122,143,168,.22);
+}
+
+.track-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.15);
+  flex-shrink: 0;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.track-item.active .track-dot {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.track-item strong {
+  display: block;
+  font-size: .78rem;
+  font-weight: 400;
+  color: var(--text-bright);
+  line-height: 1.3;
+}
+
+.track-item small {
+  display: block;
+  font-size: .64rem;
+  color: var(--text-dim);
+  letter-spacing: .04em;
+  margin-top: .1rem;
+}
+
+.volume-row {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-top: 1rem;
+  padding-top: .9rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+#vol-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: rgba(255,255,255,.1);
+  border-radius: 1px;
+  outline: none;
+}
+
+#vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: none;
+  box-shadow: 0 0 5px var(--accent);
+}
+
+#vol-slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  box-shadow: 0 0 5px var(--accent);
+}
+
+/* --- Fragment of the Night ----------------------------------- */
+#fragment {
+  text-align: center;
+}
+
+.fragment-container {
+  max-width: 660px;
+  margin: 2.5rem auto 0;
+  padding: 2.5rem 2.5rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,.012);
+  transition: border-color var(--transition);
+}
+
+.fragment-container:hover { border-color: rgba(122,143,168,.2); }
+
+.fragment-container::before {
+  content: '\201C';
+  position: absolute;
+  top: -.6rem;
+  left: 1.4rem;
+  font-family: var(--serif);
+  font-size: 5.5rem;
+  color: var(--accent);
+  opacity: .1;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.fragment-text {
+  font-family: var(--mono);
+  font-size: 1.12rem;
+  font-style: italic;
+  color: var(--text-bright);
+  line-height: 1.75;
+  margin-bottom: 1.2rem;
+  opacity: .92;
+}
+
+.fragment-attribution {
+  font-size: .68rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: .7;
+}
+
+/* --- Enhanced card top-glow on hover ------------------------- */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.card:hover::after { opacity: .6; }
+
+/* --- Returning visitor banner -------------------------------- */
+#return-banner {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  z-index: 1100;
+  background: rgba(10,10,16,.9);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: .55rem 1.4rem;
+  font-size: .7rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  white-space: nowrap;
+}
+
+#return-banner.visible { transform: translateX(-50%) translateY(0); }
+
+/* --- Glitch effect for hero eyebrow on return --------------- */
+@keyframes glitch-shift {
+  0%   { clip-path: inset(0 0 95% 0); transform: translateX(-4px); }
+  10%  { clip-path: inset(10% 0 80% 0); transform: translateX(4px); }
+  20%  { clip-path: inset(30% 0 50% 0); transform: translateX(-2px); }
+  30%  { clip-path: inset(60% 0 20% 0); transform: translateX(3px); }
+  40%  { clip-path: inset(80% 0 5% 0);  transform: translateX(-4px); }
+  50%  { clip-path: inset(0 0 0 0);     transform: translateX(0); }
+  100% { clip-path: inset(0 0 0 0);     transform: translateX(0); }
+}
+
+.hero-eyebrow.glitch::before,
+.hero-eyebrow.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-eyebrow.glitch { position: relative; }
+
+.hero-eyebrow.glitch::before {
+  color: #7af;
+  animation: glitch-shift .55s steps(1) 1;
+}
+
+.hero-eyebrow.glitch::after {
+  color: #f77;
+  animation: glitch-shift .55s steps(1) .12s 1;
+}
+
+/* --- Responsive adjustments ---------------------------------- */
+@media (max-width: 700px) {
+  #ambient-player { bottom: 1.25rem; right: 1.25rem; }
+  .fragment-container { padding: 1.75rem 1.25rem 1.5rem; }
+}
