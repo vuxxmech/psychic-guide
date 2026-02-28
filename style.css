@@ -892,3 +892,139 @@ footer p {
   #ambient-player { bottom: 1.25rem; right: 1.25rem; }
   .fragment-container { padding: 1.75rem 1.25rem 1.5rem; }
 }
+
+/* --- Questions Grid ------------------------------------------ */
+.questions-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 0;
+  max-width: 900px;
+  border: 1px solid var(--border);
+}
+
+.question-item {
+  padding: 2rem 2.2rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background var(--transition);
+}
+
+.question-item:hover { background: rgba(122,143,168,.04); }
+
+.question-text {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--text-bright);
+  margin-bottom: .7rem;
+  line-height: 1.4;
+}
+
+.question-body {
+  font-size: .875rem;
+  color: var(--text-dim);
+  line-height: 1.85;
+}
+
+@media (max-width: 700px) {
+  .questions-grid { grid-template-columns: 1fr; }
+  .question-item { border-right: none; }
+}
+
+/* --- Themes Grid --------------------------------------------- */
+#themes { padding-bottom: 6rem; }
+
+.themes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 2.5rem;
+}
+
+.theme-chip {
+  display: inline-block;
+  padding: .45rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+.theme-chip:hover {
+  color: var(--text-bright);
+  border-color: rgba(122,143,168,.35);
+  background: rgba(122,143,168,.07);
+}
+
+/* --- Card Read-Time Badge ------------------------------------ */
+.card-read-time {
+  position: absolute;
+  top: 1.6rem;
+  right: 2rem;
+  font-size: .62rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  opacity: .6;
+}
+
+/* --- Essay Navigation Links ---------------------------------- */
+.essay-nav-link {
+  font-size: .8rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.essay-nav-link--prev {
+  color: var(--text-dim);
+}
+
+.essay-nav-link--prev:hover {
+  color: var(--text-bright);
+}
+
+.essay-nav-link--next {
+  color: var(--accent);
+}
+
+.essay-nav-link--next:hover {
+  color: var(--text-bright);
+}
+
+/* --- Music Resume Banner ------------------------------------- */
+#music-resume {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 2rem;
+  z-index: 600;
+  background: rgba(10,10,16,.92);
+  border: 1px solid rgba(122,143,168,.22);
+  border-radius: 8px;
+  padding: .6rem 1.1rem;
+  font-size: .68rem;
+  letter-spacing: .1em;
+  color: var(--accent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .4s ease, transform .4s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+#music-resume.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 700px) {
+  #music-resume { bottom: 4.5rem; right: 1.25rem; }
+}
